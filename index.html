@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronaut AR Scanner</title>
+    
+    <!-- Google's AR Library -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 0; background-color: #222; color: white; }
+        h1 { margin-top: 20px; }
+        /* Make the viewer take up most of the screen */
+        model-viewer { width: 100%; height: 80vh; background-color: #333; }
+        
+        /* The UI for the Scanner Prompt */
+        #ar-prompt {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            display: none; /* Hidden by default */
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+        }
+        
+        /* Show the scanner ONLY when the phone camera opens */
+        model-viewer[ar-status="session-started"] > #ar-prompt {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Astronaut AR Scanner</h1>
+    
+    <model-viewer 
+        src="Astronaut.glb" 
+        ar 
+        ar-modes="webxr scene-viewer quick-look" 
+        camera-controls 
+        auto-rotate
+        rotation-per-second="30deg"
+        autoplay
+        shadow-intensity="1.5"
+        environment-image="neutral">
+        
+        <!-- This is the Scanner Graphic that appears on the phone screen -->
+        <div slot="prompt" id="ar-prompt">
+            <!-- Loads a free hand-animation icon from Google -->
+            <img src="https://modelviewer.dev/shared-assets/icons/hand.png" width="40">
+            <span>Point at the floor and move your phone to scan...</span>
+        </div>
+
+    </model-viewer>
+
+</body>
+</html>
